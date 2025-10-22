@@ -9,7 +9,7 @@ using namespace std;
 void taylorSeries() {
     double x_start, x_end, dx, epsilon;
 
-    cout << "Задача 1: Вычисление функции (e^x + e^(-x))/2 с помощью ряда Тейлора" << endl;
+    cout << "Задача 1: Вычисление функции с помощью ряда Тейлора" << endl;
     cout << "Введите начальное значение x: ";
     cin >> x_start;
     cout << "Введите конечное значение x: ";
@@ -63,7 +63,6 @@ unsigned char setBitsInByte(unsigned char original, int value) {
     }
 
     // Очищаем биты 3-5 (биты 3,4,5) и устанавливаем новые значения
-    // Маска для очистки: 11000111 (0xC7)
     unsigned char cleared = original & 0xC7;
 
     // Устанавливаем новые значения в биты 3-5
@@ -91,7 +90,6 @@ bool isPrime(int n) {
 int findNearestPrime(int n) {
     if (n <= 2) return 2;
 
-    // Проверяем само число
     if (isPrime(n)) return n;
 
     // Ищем ближайшее простое число
@@ -142,7 +140,7 @@ void demonstratePrimeSearch() {
 }
 
 int main() {
-    // Для работы с русским языком в консоли Windows
+    // Для работы с русским языком
     setlocale(LC_ALL, "Russian");
 
     // Задача 1
