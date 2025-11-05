@@ -87,10 +87,10 @@ int findNearestPrime(int n) {
     }
 }
 void demonstrateBitOperations() {
-    cout << "\nЗадача 2: Работа с битами" << endl;
+    cout << "\n №2 с битами" << endl;
 
-    unsigned char testByte = 0b10101010; // 170 в десятичной
-    int valueToSet = 5; // 101 в двоичной
+    unsigned char testByte = 0b10101010; // 170 в 10
+    int valueToSet = 5; // 101 в 2
 
     cout << "Исходный байт: " << bitset<8>(testByte) << " (" << (int)testByte << ")" << endl;
     cout << "Устанавливаем значение " << valueToSet << " в биты 3-5" << endl;
