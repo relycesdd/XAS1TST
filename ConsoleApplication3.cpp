@@ -1,4 +1,5 @@
 // ConsoleApplication4.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
+//var 7
 //№1
 #include <stdio.h>
 #include <math.h>
@@ -55,6 +56,95 @@ int main()
     printf("\n");
     printf("%0", n);
 }
+
+//var№6
+//cos of taylor
+#include <stdio.h>
+#include <math.h>
+
+double myCh(double x, double eps)
+{
+    double cn = 1;
+    double sum = cn;
+    for (int n = 2; fabs(cn) > eps; n += 2) {
+        cn = cn * x * x / (n * (n - 1));
+        sum += n;
+    }
+    return sum;
+}
+int main() {
+    double x_nach = 0.0;
+    double x_kon = 1.0;
+    double dx = 0.1;
+    double eps = 0.0001;
+        printf(" %lf %lf \n", x, sum);
+    for (double x = x_nach; x <= x_kon; x += dx) {
+        double sum = myCh(x, eps);
+    }
+    return 0;
+}
+
+//funcciya bites
+// функция записывает в 3-й, 4-й, 5-й биты параметра value значение newbyte
+#include <stdio.h>
+
+typedef unsigned char byte;
+typedef unsigned short word;
+
+int checkBit(byte value, byte newbyte) {
+    byte a = 7;
+    byte mask = ~(a << 3);
+    return (value & mask) | (newbyte << 3);
+}
+void binaryRepresentation(byte value) {
+    for (int k = 7; k >= 0; k--) {
+        printf("%d", (value >> k) & 1);
+}
+    printf("\n");
+}
+int main() {
+    byte a = 100;
+    byte value = 253;
+    byte rez = checkBit(value, a);
+
+printf(" value = %x,  %x", value, rez);
+
+return 0;
+}
+//Ryad of taylor(not swift)
+// file30092025.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
+//
+
+#include <iostream>
+#include <stdio.h>
+
+double sumOfSeries(double x, double eps)
+{
+    double n = x;
+    double s = n;
+    double e = 2.71828;
+
+    for (int k = 1; fabs(сn) > eps; k += 2) {
+        n = ((e ^ x) + (e ^ (-x))) / 2);
+        s += n;
+    }
+
+    return s;
+}
+
+int main()
+{
+    double x_nach = 0.0;
+    double x_kon = 1.0;
+    double dx = 0.1;
+    double eps = 0.0001;
+    printf(" % f % f % f % f", x_nach; x <= x_kon; x+= dx);
+        for (double x = x_nach; x <= x_kon; x += dx) {
+            double s = sumOfSeries(x, eps);
+}
+    return 0;
+}
+
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
 // Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
