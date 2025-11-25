@@ -175,13 +175,68 @@ if (totalSum != -1) {
 }
 return 0;
 }
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
+//№6/\/2
+#include <stdio.h>
+#include <math.h>
 
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
+double myCh(double x, double eps)
+{
+    double cn = 1;
+    double sum = cn;
+    int n = 2;
+
+    while (fabs(cn) > eps) {
+        cn = cn * x * x / (n * (n - 1));
+        sum += cn;
+        n += 2;
+    }
+    return sum;
+}
+typedef unsigned char byte;
+typedef unsigned short word;
+
+byte writeBits(byte value, byte newbyte)
+{
+    newbyte &= 0b00000111;        
+    byte mask = ~(0b00000111 << 3);
+    return (value & mask) | (newbyte << 3);
+}
+
+void binaryRepresentation(byte value) {
+    for (int k = 7; k >= 0; k--) {
+        printf("%d", (value >> k) & 1);
+    }
+    printf("\n");
+}
+
+bool isPrime(int n)
+{
+    if (n < 2) return false;
+    for (int i = 2; i <= sqrt(n); i++)
+        if (n % i == 0) return false;
+    return true;
+}
+
+int nearestPrime(int n)
+{
+    if (isPrime(n)) return n;
+    int d = 1;
+    while (1) {
+        if (n - d >= 2 && isPrime(n - d))
+            return n - d;
+        if (isPrime(n + d)) return n + d;
+        d++;
+    }
+}
+
+int main() {
+    double x_nach = 0.0;
+    double x_kon = 1.0;
+    double dx = 0.1;
+    double eps = 0.0001;
+    for (double x = x_nach; x <= x_kon + 1e-12; x += dx) {
+        double sum = myCh(x, eps);
+        printf("%7.3lf      %lf\n", x, sum);
+    }
+}
+
