@@ -144,6 +144,37 @@ int main() {
     return 0;
 }
 
+
+//ДЛЯ КР!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#include <stdio.h>
+#include <math.h>
+#include <iostream>
+#include <cmath>
+
+int readSum(const char* fname) {
+    FILE* f, * fw;
+    fopen_s(&f, fname, "r");
+    fopen_s(&fw, "text1.txt", "w");
+    if (f == NULL) {
+        printf("file not open");
+        return -1;
+    }
+    int sum = 0;
+    int a;
+    while (fscanf_s(f, "%d", &a) == 1) {
+        sum += a;
+    }
+    return sum;
+}
+int main() {
+    const char* filename = "C:\\Users\\askhlyustov\\source\\repos\\ConsoleApplication1\\input.txt";
+    int totalSum = readSum(filename);
+
+if (totalSum != -1) {
+    printf("summ of all numbers: %d\n", totalSum);
+}
+return 0;
+}
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
 // Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
 
