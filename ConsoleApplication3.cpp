@@ -1,3 +1,112 @@
+//24
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+#include <ctype.h>
+#include <string.h>
+
+int a[100][100];
+int n;
+
+// 1) Суммы столбцов без отрицательных элементов
+void sumplus() {
+    for (int ito = 0; ito < n; ito++) {
+        int YeOtr = 0;
+        int sum = 0;
+            
+        for (int jto = 0; jto < n; jto++) {
+            if (a[jto][ito] < 0)
+                YeOtr = 1;
+
+            sum += a[jto][ito];
+        }
+
+        if (!YeOtr)
+            printf("Столбец %d: сумма = %d\n", ito, sum);
+    }
+}
+
+// 2) Минимальная сумма диагоналей, параллельных побочной
+
+void minParallelDiagSum() {
+    int minSum = INT_MAX;
+
+    for (int k = 0; k <= 2 * n - 2; k++) {
+        int sum = 0;
+
+        for (int i = 0; i < n; i++) {
+            int j = k - i;
+
+            if (j >= 0 && j < n)
+                sum += abs(a[i][j]);
+        }
+
+        if (sum < minSum)
+            minSum = sum;
+    }
+
+    printf("\n2) Минимальная сумма модулей диагоналей: %d\n", minSum);
+}
+
+// 3) Проверка двузначных чисел в строках файла
+
+//int isTwoDigit(const char* s, int i) {
+//    // -10 ... -99
+//    if (s[i] == '-' && isdigit(s[i + 1]) && isdigit(s[i + 2]))
+//        return 1;
+//
+//    // 10 ... 99
+//    if (isdigit(s[i]) && isdigit(s[i + 1]))
+//        return 1;
+//
+//    return 0;
+//}
+//
+//int containsTwoDigit(const char* s) {
+//    int len = strlen(s);
+//    for (int i = 0; i < len - 1; i++)
+//        if (isTwoDigit(s, i))
+//            return 1;
+//    return 0;
+//}
+//
+//void printLinesWithTwoDigitNumbers() {
+//    printf("\n3) Строки файла input.txt с двузначными числами:\n\n");
+//
+//    FILE* f = fopen("input.txt", "r");
+//    if (!f) {
+//        printf("Файл input.txt не найден!\n");
+//        return;
+//    }
+//
+//    char line[256];
+//
+//    while (fgets(line, sizeof(line), f)) {
+//        if (containsTwoDigit(line))
+//            printf("%s", line);
+//    }
+//
+//    fclose(f);
+//}
+int main() {
+
+    printf("Введите n: ");
+    scanf("%d", &n);
+
+    printf("Введите элементы матрицы %dx%d:\n", n, n);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            scanf("%d", &a[i][j]);
+
+    sumplus();
+    minParallelDiagSum();            
+    //printLinesWithTwoDigitNumbers(); 
+
+    return 0;
+}
+
+
+
 // ConsoleApplication4.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //var 7
 //№1
