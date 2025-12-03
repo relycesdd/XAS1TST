@@ -1,111 +1,84 @@
-//24
+//1)
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <ctype.h>
+#include <wchar.h>
+#include <locale.h>
+#include <wctype.h>
 #include <string.h>
 
 int a[100][100];
 int n;
 
-// 1) Суммы столбцов без отрицательных элементов
+int YeDvo(wchar_t* s) {
+    int len = wcslen(s);
+    for (int i = 0; i < len - 1; i++) {
+        if (iswdigit(s[i]) && iswdigit(s[i + 1])) {
+            return 1;
+        }
+    }
+    return 0;
+}
+//3
+void LineW2dgnum() {
+
+    const char* filename = "C:\\Users\\askhlyustov\\source\\repos\\ConsoleApplication1\\input.txt";
+    FILE* file = fopen(filename, "r");
+    wchar_t line[300];
+    while (fgetws(line, 300, file) != NULL) {
+        size_t len = wcslen(line);
+        if (len > 0 && line[len - 1] == L'\n') {
+            line[len - 1] = L'\0';
+        }
+
+        if (YeDvo(line)) {
+            wprintf(L"%ls\n", line);
+        }
+    }
+
+    fclose(file);
+}
+
 void sumplus() {
-    for (int ito = 0; ito < n; ito++) {
-        int YeOtr = 0;
-        int sum = 0;
-            
-        for (int jto = 0; jto < n; jto++) {
-            if (a[jto][ito] < 0)
-                YeOtr = 1;
+    int sum = 0;
 
-            sum += a[jto][ito];
+    for (int j = 0; j < n; j++) {        
+        int hasNegative = 0;
+
+        for (int i = 0; i < n; i++) {    
+            if (a[i][j] < 0) {
+                hasNegative = 1;
+                break;
+            }
         }
 
-        if (!YeOtr)
-            printf("Столбец %d: сумма = %d\n", ito, sum);
-    }
-}
-
-// 2) Минимальная сумма диагоналей, параллельных побочной
-
-void minParallelDiagSum() {
-    int minSum = INT_MAX;
-
-    for (int k = 0; k <= 2 * n - 2; k++) {
-        int sum = 0;
-
-        for (int i = 0; i < n; i++) {
-            int j = k - i;
-
-            if (j >= 0 && j < n)
-                sum += abs(a[i][j]);
+        if (!hasNegative) {              
+            for (int i = 0; i < n; i++)
+                sum += a[i][j];
         }
-
-        if (sum < minSum)
-            minSum = sum;
     }
 
-    printf("\n2) Минимальная сумма модулей диагоналей: %d\n", minSum);
+    printf("Сумма элементов матрицы: = %d\n", sum);
 }
 
-// 3) Проверка двузначных чисел в строках файла
-
-//int isTwoDigit(const char* s, int i) {
-//    // -10 ... -99
-//    if (s[i] == '-' && isdigit(s[i + 1]) && isdigit(s[i + 2]))
-//        return 1;
-//
-//    // 10 ... 99
-//    if (isdigit(s[i]) && isdigit(s[i + 1]))
-//        return 1;
-//
-//    return 0;
-//}
-//
-//int containsTwoDigit(const char* s) {
-//    int len = strlen(s);
-//    for (int i = 0; i < len - 1; i++)
-//        if (isTwoDigit(s, i))
-//            return 1;
-//    return 0;
-//}
-//
-//void printLinesWithTwoDigitNumbers() {
-//    printf("\n3) Строки файла input.txt с двузначными числами:\n\n");
-//
-//    FILE* f = fopen("input.txt", "r");
-//    if (!f) {
-//        printf("Файл input.txt не найден!\n");
-//        return;
-//    }
-//
-//    char line[256];
-//
-//    while (fgets(line, sizeof(line), f)) {
-//        if (containsTwoDigit(line))
-//            printf("%s", line);
-//    }
-//
-//    fclose(f);
-//}
 int main() {
+
+    setlocale(LC_ALL, "RU");
 
     printf("Введите n: ");
     scanf("%d", &n);
 
-    printf("Введите элементы матрицы %dx%d:\n", n, n);
+    printf("Введите размеры матрицы %dx%d:\n", n, n);
     for (int i = 0; i < n; i++)
         for (int j = 0; j < n; j++)
             scanf("%d", &a[i][j]);
 
     sumplus();
-    minParallelDiagSum();            
-    //printLinesWithTwoDigitNumbers(); 
+
+    wprintf(L"\nСтроки, содержащие двузначные числа:\n");
+    LineW2dgnum();
 
     return 0;
 }
-
-
 
 // ConsoleApplication4.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //var 7
