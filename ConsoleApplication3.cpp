@@ -1,3 +1,93 @@
+//testvar24
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <math.h>
+
+int a[100][100];
+int n;
+
+// ЗАДАЧА 1
+void sumplus() {
+    int sum = 0;
+    for (int j = 0; j < n; j++) {
+        int hasNegative = 0;
+        for (int i = 0; i < n; i++) {
+            if (a[i][j] < 0) {
+                hasNegative = 1;
+                break;
+            }
+        }
+        if (!hasNegative) {
+            for (int i = 0; i < n; i++)
+                sum += a[i][j];
+        }
+    }
+    printf("Сумма столбцов без отрицательных: %d\n", sum);
+}
+
+// ЗАДАЧА 2
+int MinSumDiag() {
+    int minSum = 2147483647;
+    for (int d = -(n - 1); d <= (n - 1); d++) {
+        int sum = 0, hasElements = 0;
+        for (int i = 0; i < n; i++) {
+            int j = n - 1 - i + d;
+            if (j >= 0 && j < n) {
+                sum += abs(a[i][j]);
+                hasElements = 1;
+            }
+        }
+        if (hasElements && sum < minSum)
+            minSum = sum;
+    }
+    return minSum;
+}
+
+// ЗАДАЧА 3
+int hasTwoDigits(const char* s) {
+    for (int i = 0; s[i] != '\0'; i++)
+        if (isdigit((unsigned char)s[i]) && isdigit((unsigned char)s[i + 1]))
+            return 1;
+    return 0;
+}
+
+void PrintLinesWithTwoDigits() {
+    const char* filename = "C:\\Users\\askhlyustov\\source\\repos\\ConsoleApplication1\\input.txt";
+    FILE* file = fopen(filename, "r");
+    if (!file) return;
+
+    char line[300];
+    while (fgets(line, 300, file) != NULL) {
+        size_t len = strlen(line);
+        if (len > 0 && line[len - 1] == '\n')
+            line[len - 1] = '\0';
+        if (hasTwoDigits(line))
+            printf("%s\n", line);
+    }
+    fclose(file);
+}
+
+// MAIN
+int main() {
+    printf("Введите n: ");
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            scanf("%d", &a[i][j]);
+
+    sumplus();
+
+    printf("Минимальная сумма диагоналей: %d\n", MinSumDiag());
+
+    PrintLinesWithTwoDigits();
+
+    return 0;
+}
+
+
 //1)
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
