@@ -1,3 +1,98 @@
+//чуть дошаманить
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <math.h>
+
+int a[100][100];  // Матрица
+int n;  // Размер матрицы
+
+// ЗАДАЧА 1: Сумма элементов в столбцах, не содержащих отрицательных чисел
+void sumplus() {
+    int sum = 0;
+    for (int j = 0; j < n; j++) {  // Проходим по каждому столбцу
+        int hasNegative = 0;
+        for (int i = 0; i < n; i++) {  // Проверяем все элементы столбца
+            if (a[i][j] < 0) {  // Если в столбце есть отрицательное число
+                hasNegative = 1;
+                break;  // Прерываем цикл
+            }
+        }
+
+        if (!hasNegative) {  // Если в столбце нет отрицательных чисел
+            for (int i = 0; i < n; i++)  // Суммируем все элементы столбца
+                sum += a[i][j];
+        }
+    }
+    printf("Сумма элементов столбцов без отрицательных: %d\n", sum);
+}
+
+// ЗАДАЧА 2: Минимум среди сумм модулей элементов диагоналей, параллельных побочной диагонали
+int MinSumDiag() {
+    int minSum = 2147483647;  // Инициализируем минимальное значение как максимально возможное
+    for (int d = -(n - 1); d <= (n - 1); d++) {  // Проходим по всем диагоналям, параллельным побочной
+        int sum = 0, hasElements = 0;
+        for (int i = 0; i < n; i++) {
+            int j = n - 1 - i + d;  // Вычисляем индекс столбца для диагонали
+            if (j >= 0 && j < n) {
+                sum += abs(a[i][j]);  // Суммируем модули элементов диагонали
+                hasElements = 1;
+            }
+        }
+        if (hasElements && sum < minSum)
+            minSum = sum;  // Обновляем минимум, если нашли меньшую сумму
+    }
+    return minSum;
+}
+
+// ЗАДАЧА 3: Проверка на наличие двузначных чисел в строке
+int hasTwoDigits(const char* s) {
+    for (int i = 0; s[i] != '\0'; i++) {
+        if (isdigit(s[i]) && isdigit(s[i + 1]))  // Если нашли два соседних числа
+            return 1;
+    }
+    return 0;
+}
+
+// ЗАДАЧА 3: Вывод строк, содержащих двузначные числа
+void PrintLinesWithTwoDigits() {
+    const char* filename = "input.txt";  // Путь к файлу
+    FILE* file = fopen(filename, "r");  // Открываем файл для чтения
+    if (!file) {
+        printf("Ошибка при открытии файла.\n");
+        return;
+    }
+
+    char line[300];
+    while (fgets(line, sizeof(line), file) != NULL) {  // Читаем строки из файла
+        if (hasTwoDigits(line))  // Если строка содержит двузначные числа
+            printf("%s", line);  // Выводим строку
+    }
+    fclose(file);  // Закрываем файл
+}
+
+// MAIN
+int main() {
+    printf("Введите n (размер матрицы): ");
+    scanf("%d", &n);  // Вводим размер матрицы
+
+    // Вводим элементы матрицы
+    printf("Введите элементы матрицы %dx%d:\n", n, n);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            scanf("%d", &a[i][j]);
+
+    sumplus();  // Выполнение задачи 1
+
+    printf("Минимальная сумма диагоналей: %d\n", MinSumDiag());  // Выполнение задачи 2
+
+    printf("\nСтроки, содержащие двузначные числа:\n");
+    PrintLinesWithTwoDigits();  // Выполнение задачи 3
+
+    return 0;
+}
+
+
 //testvar24
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
