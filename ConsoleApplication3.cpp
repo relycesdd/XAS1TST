@@ -1,3 +1,84 @@
+//это в bmp.sqw, парикрепить рисунок и бмп скв в исходные файйлы, дважды в файлы аппликейшн.
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef unsigned short word;
+typedef unsigned int dword;
+typedef unsigned char BYTE;
+
+#pragma pack(push, 1)
+struct BitMapHeader {
+    word  bfType;
+    dword bfSize;
+    word  bfReserved1;
+    word  bfReserved2;
+    dword bfOffbits;
+
+    dword biSize;
+    dword biWidth;
+    dword biHeight;
+    word  biPlanes;
+    word  biBitCount;
+    dword biCompression;
+    dword biSizeImage;
+    dword biXPelPerMeter;
+    dword biYPelPerMeter;
+    dword biClrUsed;
+    dword biClrImportant;
+};
+#pragma pack(pop)
+
+struct RGB {
+    BYTE b, g, r, a;
+};
+
+int main()
+{
+    FILE* f = fopen("Unnamed.bmp", "rb");
+    if (!f) return 1;
+
+    BitMapHeader h;
+    fread(&h, sizeof(h), 1, f);
+
+    RGB palette[256];
+    fread(palette, 1024, 1, f);
+
+    int oldW = h.biWidth;
+    int oldH = h.biHeight;
+    int scale = 4;
+
+    BYTE* oldImg = (BYTE*)malloc(h.biSizeImage);
+    fread(oldImg, h.biSizeImage, 1, f);
+    fclose(f);
+
+    int newW = oldW / scale;
+    int newH = oldH / scale;
+
+    BYTE* newImg = (BYTE*)malloc(newW * newH);
+
+    for (int y = 0; y < newH; y++)
+        for (int x = 0; x < newW; x++)
+            newImg[y * newW + x] = oldImg[(y * scale) * oldW + (x * scale)];
+
+    h.biWidth = newW;
+    h.biHeight = newH;
+    h.biSizeImage = newW * newH;
+    h.bfSize = h.bfOffbits + h.biSizeImage;
+
+    FILE* out = fopen("Unnamed.bmp", "wb");
+    fwrite(&h, sizeof(h), 1, out);
+    fwrite(palette, 1024, 1, out);
+    fwrite(newImg, h.biSizeImage, 1, out);
+
+    fclose(out);
+    free(oldImg);
+    free(newImg);
+
+    return 0;
+}
+
+
 //чуть дошаманить
 #include <stdio.h>
 #include <string.h>
