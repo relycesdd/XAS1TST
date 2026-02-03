@@ -1,3 +1,26 @@
+//VARIANT IV
+// 
+// 
+// 
+//#pragma?
+#include <string.h>
+#include <iostream>
+
+class Aeroflot 
+{
+public:
+//private:
+	char final_point[50];
+	int number_of_race;
+	char planeType[50];
+	void print()
+	{
+		std::cout << "Пункт назначения: " << final_point
+			<< \n"Номер рейса: " << number_of_race
+			<< \n"Тип самолета:" << planeType;
+
+
+
 //это в bmp.sqw, парикрепить рисунок и бмп скв в исходные файйлы, дважды в файлы аппликейшн.
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
