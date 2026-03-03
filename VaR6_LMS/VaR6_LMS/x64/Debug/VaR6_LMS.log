@@ -1,0 +1,5 @@
+﻿  main.cpp
+C:\Users\askhlyustov\source\repos\VaR6_LMS\VaR6_LMS\main.cpp(3,10): error C1083: Не удается открыть файл включение: WORKER.h: No such file or directory,
+  WORKER.cpp
+  WORKER.h
+  Создание кода...
